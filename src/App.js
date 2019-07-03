@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import CharacterSheet from './CharacterSheet';
+import Input from './Input';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props)
+
+    this.state={
+      characterSheet: {
+        name: "",
+        strength: ""
+      }
+    }
+  }
+
+  changeValue(event, key) {
+    let newStats = this.state.characterSheet;
+    newStats[key] = event.target.value;
+    this.setState({
+      characterSheet: newStats
+    });
+  }
+  render() {
+    return (
+      <div className="header">
+        <label>Name:</label>
+        <CharacterSheet 
+          allStats={this.state.characterSheet}
+        />
+        <Input label={'Name'} value={this.state.characterSheet.name} onChange={(event)=> this.changeValue(event, "name")} />
+        <Input inputType={"number"} label={'Strength'} value={this.state.characterSheet.strength} onChange={(event)=> this.changeValue(event, "strength")} />
+      </div>
+    )
+  }
 }
 
 export default App;
